@@ -1,0 +1,11 @@
+
+.vscode
+MusicNotch/.DS_Store
+xcuserdata/
+MusicNotchUITests/
+MusicNotchTests/
+MusicNotch.xcodeproj/xcuserdata/
+Builds/
+*.DS_Store
+build/
+releases/
