@@ -13,11 +13,15 @@ public struct JochexTab<Tab>: View where Tab: JochexTabItem {
     @Binding var selectedTab: Tab
     private var tab: Tab
     
+    // MARK: - Init
+    
     public init(isExpanded: Binding<Bool>, selectedTab: Binding<Tab>, tab: Tab) {
         self._isExpanded = isExpanded
         self._selectedTab = selectedTab
         self.tab = tab
     }
+    
+    // MARK: - Body
     
     public var body: some View {
         Button {

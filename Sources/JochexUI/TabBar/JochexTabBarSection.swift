@@ -68,8 +68,7 @@ public struct JochexTabBarSection<Header, Tab>: View where Header: View, Tab: Jo
         VStack(alignment: .leading, spacing: 4) {
             if Header.self != EmptyView.self {
                 Group {
-                    if isExpanded {
-                    
+                    if isExpanded && Header.self != Divider.self {
                         header()
                             .foregroundStyle(.secondary)
                             .font(.callout)
@@ -88,75 +87,4 @@ public struct JochexTabBarSection<Header, Tab>: View where Header: View, Tab: Jo
             }
         }
     }
-}
-
-// MARK: - Preview
-
-private enum PreviewTab: JochexTabItem {
-    case general
-    case about
-    case music
-    case lockscreen
-    case quit
-    
-    var id: Self { self }
-    
-    var name: LocalizedStringKey {
-        switch self {
-        case .general: "General"
-        case .about: "About"
-        case .music: "Music"
-        case .lockscreen: "Shortcuts"
-        case .quit: "Quit"
-        }
-    }
-    
-    var icon: Image {
-        switch self {
-        case .general: .init(systemName: "gear")
-        case .about: .init(systemName: "info")
-        case .music: .init(systemName: "music.note")
-        case .lockscreen: .init(systemName: "keyboard")
-        case .quit: .init(systemName: "power")
-        }
-    }
-    
-    
-}
-
-#Preview(
-    "TabBarSection",
-    traits: .sizeThatFitsLayout
-) {
-    @Previewable @State var selection: PreviewTab = PreviewTab.general
-    @Previewable @State var isExpanded: Bool = false
-    
-    VStack {
-        JochexTabBar {
-            JochexTabBarSection(
-                selectedTab: $selection,
-                isExpanded: $isExpanded,
-                tabs: [PreviewTab.general, .about]
-            )
-            
-            JochexTabBarSection(
-                "Section title",
-                selectedTab: $selection,
-                isExpanded: $isExpanded,
-                tabs: [PreviewTab.music, .lockscreen]
-            )
-            
-            JochexTabBarSection(
-                selectedTab: $selection,
-                isExpanded: $isExpanded,
-                tabs: [PreviewTab.quit]
-            ) { EmptyView() }
-        }
-        .onHover { hovering in
-            withAnimation(.bouncy(duration: 0.3)) {
-                isExpanded = hovering }
-        }
-    }
-    .frame(maxWidth: 170, alignment: .leading)
-    .padding(20)
 }
