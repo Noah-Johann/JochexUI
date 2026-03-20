@@ -12,4 +12,6 @@ public protocol JochexTabItem: Equatable, Identifiable {
     
     associatedtype IconView: View
     var icon: IconView { get }
+    
+    var buttonAction: () -> () { get }
 }

@@ -25,6 +25,7 @@ public struct JochexTab<Tab>: View where Tab: JochexTabItem {
     
     public var body: some View {
         Button {
+            tab.buttonAction()
             withAnimation(.easeInOut(duration: 0.1)) {
                 selectedTab = tab
             }

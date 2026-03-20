@@ -101,6 +101,12 @@ private enum PreviewTab: JochexTabItem {
         }
     }
     
+    var buttonAction: () -> () {
+        switch self {
+        case .quit: { print("terminating app") }
+        default: {}
+        }
+    }
     
 }
 
@@ -177,6 +183,7 @@ private enum PreviewTab: JochexTabItem {
     .frame(maxWidth: 150, alignment: .leading)
     .padding(20)
 }
+
 
 
 
