@@ -9,26 +9,32 @@ import SwiftUI
 
 public struct JochexTabBar<Tabs>: View where Tabs: View {
     @Environment(\.colorScheme) private var colorScheme
-    
-    @State private var isExpanded: Bool = false
+
+    @Binding private var isExpanded: Bool
     public var maxHeight: CGFloat = -1
-    
+
     private var glass: Bool = true
     @ViewBuilder private var tabs: () -> Tabs
     
     // MARK: - Init
     
     /// Tab Bar without a maximum height
-    public init(@ViewBuilder tabs: @escaping () -> Tabs) {
+    public init(
+        isExpanded: Binding<Bool>,
+        @ViewBuilder tabs: @escaping () -> Tabs
+    ) {
+        self._isExpanded = isExpanded
         self.tabs = tabs
     }
-    
+
     /// Tab Bar with specified use of liquid glass
     public init(
         glass: Bool,
+        isExpanded: Binding<Bool>,
         @ViewBuilder tabs: @escaping () -> Tabs
     ) {
         self.glass = glass
+        self._isExpanded = isExpanded
         self.tabs = tabs
     }
     
@@ -37,6 +43,17 @@ public struct JochexTabBar<Tabs>: View where Tabs: View {
 //        maxHeight: CGFloat,
 //        @ViewBuilder tabs: @escaping () -> Tabs
 //    ) {
+//        self.maxHeight = maxHeight
+//        self.tabs = tabs
+//    }
+    
+    /// Tab Bar with specified maximum height and glass use
+//    public init(
+//        glass: Bool,
+//        maxHeight: CGFloat,
+//        @ViewBuilder tabs: @escaping () -> tabs
+//    ) {
+//        self.glass = glass
 //        self.maxHeight = maxHeight
 //        self.tabs = tabs
 //    }
@@ -62,10 +79,10 @@ public struct JochexTabBar<Tabs>: View where Tabs: View {
             }
         }
         .frame(width: isExpanded ? nil : 52)
-   //     .frame(maxHeight: maxHeight > 44 ? maxHeight : .infinity)
         .onHover { hovering in
             withAnimation(.bouncy(duration: 0.3)) {
-                isExpanded = hovering }
+                isExpanded = hovering
+            }
         }
     }
 }
@@ -118,7 +135,7 @@ private enum PreviewTab: JochexTabItem {
     @Previewable @State var isExpanded: Bool = false
     
     VStack {
-        JochexTabBar(glass: true) {
+        JochexTabBar(glass: true, isExpanded: $isExpanded) {
             JochexTabBarSection(
                 selectedTab: $selection,
                 isExpanded: $isExpanded,
@@ -137,10 +154,6 @@ private enum PreviewTab: JochexTabItem {
                 isExpanded: $isExpanded,
                 tabs: [PreviewTab.quit]
             ) { Divider() }
-        }
-        .onHover { hovering in
-            withAnimation(.bouncy(duration: 0.3)) {
-                isExpanded = hovering }
         }
     }
     .frame(maxWidth: 150, alignment: .leading)
@@ -155,7 +168,7 @@ private enum PreviewTab: JochexTabItem {
     @Previewable @State var isExpanded: Bool = false
     
     VStack {
-        JochexTabBar(glass: false) {
+        JochexTabBar(glass: false, isExpanded: $isExpanded) {
             JochexTabBarSection(
                 selectedTab: $selection,
                 isExpanded: $isExpanded,
@@ -174,10 +187,6 @@ private enum PreviewTab: JochexTabItem {
                 isExpanded: $isExpanded,
                 tabs: [PreviewTab.quit]
             ) { Divider() }
-        }
-        .onHover { hovering in
-            withAnimation(.bouncy(duration: 0.3)) {
-                isExpanded = hovering }
         }
     }
     .frame(maxWidth: 150, alignment: .leading)
