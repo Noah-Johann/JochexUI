@@ -71,13 +71,14 @@ public struct JochexTabBarSection<Header, Tab>: View where Header: View, Tab: Jo
                     if isExpanded && Header.self != Divider.self {
                         header()
                             .foregroundStyle(.secondary)
-                            .font(.callout)
+                            .font(.subheadline)
+                            .padding(.top, 2)
                     } else {
                         Divider()
                     }
                 }
-                .frame(minHeight: 9)
-                .padding(.vertical, 3)
+                .frame(minHeight: 16)
+                .background { Color.red }
                 .padding(.horizontal, 11)
                 .foregroundStyle(.secondary)
                 .transition(.blurReplace)
