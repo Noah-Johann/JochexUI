@@ -29,7 +29,19 @@ public class JochexWindow: NSWindow {
             defer: false
         )
         
-        contentView = NSHostingView(rootView: content().frame(width: width, height: height))
+        let view = NSView()
+        let jochexWindowView = NSHostingView(rootView: JochexWindowView(content: content).frame(width: width, height: height))
+        view.addSubview(jochexWindowView)
+
+        jochexWindowView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            jochexWindowView.topAnchor.constraint(equalTo: view.topAnchor),
+            jochexWindowView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            jochexWindowView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            jochexWindowView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+
+        contentView = view
         titlebarAppearsTransparent = true
     }
     
