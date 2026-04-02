@@ -78,7 +78,6 @@ public struct JochexTabBarSection<Header, Tab>: View where Header: View, Tab: Jo
                     }
                 }
                 .frame(minHeight: 16)
-                .background { Color.red }
                 .padding(.horizontal, 11)
                 .foregroundStyle(.secondary)
                 .transition(.blurReplace)
