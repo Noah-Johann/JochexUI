@@ -23,7 +23,7 @@ class JochexTabBarPanel: NSPanel {
         hidesOnDeactivate = false
         becomesKeyOnlyIfNeeded = true
         backgroundColor = .clear
-        hasShadow = false
+        hasShadow = true
     }
     
 }

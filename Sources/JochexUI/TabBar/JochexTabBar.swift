@@ -72,10 +72,10 @@ public struct JochexTabBar<Tabs>: View where Tabs: View {
             } else {
                 RoundedRectangle(cornerRadius: 24)
                     .foregroundStyle(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24)
-                            .stroke(colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), lineWidth: 1)
-                    )
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 24)
+//                            .stroke(colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1), lineWidth: 1)
+//                    )
             }
         }
         .frame(width: isExpanded ? nil : 52)
