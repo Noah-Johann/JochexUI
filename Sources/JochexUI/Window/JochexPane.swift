@@ -8,6 +8,8 @@
 import SwiftUI
 
 public struct JochexPane<Header, Content>: View where Header: View, Content: View {
+    @Environment(\.paneTitleHeight) private var titleBarHeight
+    
     @ViewBuilder private var header: () -> Header
     @ViewBuilder private var content: () -> Content
     
@@ -44,8 +46,17 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
             AutoScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 18) {
                     content()
-                }
+                } .padding(.top, titleBarHeight)
             }
-        } .jochexBackground()
+            
+            VStack(spacing: 0) {
+                header()
+                    .frame(height: titleBarHeight)
+               // Divider()
+                Spacer()
+            }
+        }
+        .ignoresSafeArea()
+        .jochexBackground()
     }
 }

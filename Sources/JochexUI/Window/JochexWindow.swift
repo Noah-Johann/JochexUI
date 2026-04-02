@@ -43,6 +43,7 @@ public class JochexWindow: NSWindow {
 
         contentView = view
         titlebarAppearsTransparent = true
+        super.layoutIfNeeded()
     }
     
     /// Jochex Window with a tab bar
@@ -71,6 +72,7 @@ public class JochexWindow: NSWindow {
 
         contentView = view
         titlebarAppearsTransparent = true
+        super.layoutIfNeeded()
         attachTabBar(tabBar: tabBar)
         addMoveObservers()
     }
