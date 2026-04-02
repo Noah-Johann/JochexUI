@@ -72,6 +72,7 @@ public class JochexWindow: NSWindow {
 
         contentView = view
         titlebarAppearsTransparent = true
+        self.toolbar = NSToolbar()
         super.layoutIfNeeded()
         attachTabBar(tabBar: tabBar)
         addMoveObservers()

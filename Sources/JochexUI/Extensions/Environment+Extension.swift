@@ -8,5 +8,5 @@
 import SwiftUI
 
 public extension EnvironmentValues {
-    @Entry var paneTitleHeight: CGFloat = 48
+    @Entry var paneTitleHeight: CGFloat = 52
 }

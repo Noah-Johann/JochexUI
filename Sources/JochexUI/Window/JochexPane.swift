@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct JochexPane<Header, Content>: View where Header: View, Content: View {
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.paneTitleHeight) private var titleBarHeight
     
     @ViewBuilder private var header: () -> Header
@@ -43,17 +44,36 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
     
     public var body: some View {
         ZStack {
-            AutoScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 18) {
-                    content()
-                } .padding(.top, titleBarHeight)
+            VStack {
+                if #unavailable(macOS 26) {
+                    VStack {
+                        header()
+                            .frame(height: titleBarHeight)
+                        Divider()
+                        Spacer()
+                    }
+                }
+                
+                AutoScrollView(.vertical, showsIndicators: false) {
+                    LazyVStack(spacing: 18) {
+                        content()
+                    } .padding(.top, titleBarHeight)
+                }
             }
             
-            VStack(spacing: 0) {
-                header()
-                    .frame(height: titleBarHeight)
-               // Divider()
-                Spacer()
+            if #available(macOS 26, *) {
+                VStack(spacing: 0) {
+                    header()
+                        .frame(height: titleBarHeight)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(.black.opacity(colorScheme == .dark ? 0.2 : 0.1))
+                        )
+                        .glassEffect(.clear, in: RoundedRectangle(cornerRadius: 24))
+                    // Divider()
+                    Spacer()
+                }
             }
         }
         .ignoresSafeArea()
