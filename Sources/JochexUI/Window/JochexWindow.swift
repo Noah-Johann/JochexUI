@@ -44,6 +44,8 @@ public class JochexWindow: NSWindow {
 
         contentView = view
         titlebarAppearsTransparent = true
+        isReleasedWhenClosed = true
+        self.toolbar = NSToolbar()
         super.layoutIfNeeded()
     }
     

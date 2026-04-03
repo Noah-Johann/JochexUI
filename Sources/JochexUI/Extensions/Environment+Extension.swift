@@ -9,4 +9,5 @@ import SwiftUI
 
 public extension EnvironmentValues {
     @Entry var paneTitleHeight: CGFloat = 52
+    @Entry var paneTrafficLightInset: CGFloat = 90
 }
