@@ -14,6 +14,7 @@ public class JochexWindow: NSWindow {
     
     private var observer: Any?
     private var tabBarPanel: JochexTabBarPanel?
+    private var tabBarFactory: (() -> AnyView)?
 
     // MARK: - Init
     
@@ -72,10 +73,18 @@ public class JochexWindow: NSWindow {
 
         contentView = view
         titlebarAppearsTransparent = true
+        isReleasedWhenClosed = true
         self.toolbar = NSToolbar()
         super.layoutIfNeeded()
-        attachTabBar(tabBar: tabBar)
+        self.tabBarFactory = { AnyView(tabBar()) }
+        attachTabBar(tabBar: { AnyView(tabBar()) })
         addMoveObservers()
+    }
+    
+    @MainActor deinit {
+        if let observer = observer {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     @objc dynamic var _cornerRadius: CGFloat {
@@ -86,9 +95,28 @@ public class JochexWindow: NSWindow {
         }
     }
     
+    override public func makeKeyAndOrderFront(_ sender: Any?) {
+        super.makeKeyAndOrderFront(sender)
+        if tabBarPanel == nil, let tabBarFactory {
+            attachTabBar(tabBar: tabBarFactory)
+        }
+    }
+
+    override public func orderFrontRegardless() {
+        super.orderFrontRegardless()
+        if tabBarPanel == nil, let tabBarFactory {
+            attachTabBar(tabBar: tabBarFactory)
+        }
+    }
+    
     // MARK: - Tab Bar
     
-    private func attachTabBar(tabBar: @escaping () -> some View) {
+    private func attachTabBar(tabBar: @escaping () -> AnyView) {
+        if let existing = self.tabBarPanel {
+            positionPanel(existing)
+            addChildWindow(existing, ordered: .above)
+            return
+        }
         let panel = JochexTabBarPanel()
         let panelContent = HStack(spacing: 0) {
             tabBar()
@@ -98,6 +126,7 @@ public class JochexWindow: NSWindow {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
         panel.contentView = NSHostingView(rootView: panelContent)
+        panel.isReleasedWhenClosed = true
         positionPanel(panel)
         addChildWindow(panel, ordered: .above)
         self.tabBarPanel = panel
@@ -129,7 +158,10 @@ public class JochexWindow: NSWindow {
     }
     
     override public func close() {
-        tabBarPanel?.orderOut(nil)
+        if let panel = tabBarPanel {
+            self.removeChildWindow(panel)
+            panel.orderOut(nil)
+        }
         tabBarPanel = nil
         if let observer {
             NotificationCenter.default.removeObserver(observer)
@@ -137,3 +169,4 @@ public class JochexWindow: NSWindow {
         super.close()
     }
 }
+
