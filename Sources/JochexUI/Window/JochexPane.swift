@@ -10,6 +10,8 @@ import SwiftUI
 public struct JochexPane<Header, Content>: View where Header: View, Content: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.paneTitleHeight) private var titleBarHeight
+    @Environment(\.paneHorizontalInset) private var horizontalInset
+    @Environment(\.paneVerticalInset) private var verticalInset
     
     @ViewBuilder private var header: () -> Header
     @ViewBuilder private var content: () -> Content
@@ -57,7 +59,10 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
                 AutoScrollView(.vertical, showsIndicators: false) {
                     LazyVStack(spacing: 18) {
                         content()
-                    } .padding(.top, titleBarHeight)
+                    }
+                    .padding(.top, titleBarHeight)
+                    .padding(.horizontal, horizontalInset)
+                    .padding(.vertical, verticalInset)
                 }
             }
             
@@ -71,7 +76,6 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
                                 .fill(.black.opacity(colorScheme == .dark ? 0.2 : 0.1))
                         )
                         .glassEffect(.clear, in: RoundedRectangle(cornerRadius: 24))
-                    // Divider()
                     Spacer()
                 }
             }
