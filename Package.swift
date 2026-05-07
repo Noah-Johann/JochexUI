@@ -15,11 +15,17 @@ let package = Package(
             targets: ["JochexUI"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/lorenzofiamingo/swiftui-variadic-views", from: "1.0.0"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "JochexUI"
+            name: "JochexUI",
+            dependencies: [
+                .product(name: "VariadicViews", package: "swiftui-variadic-views"),
+            ]
         ),
 
     ]
