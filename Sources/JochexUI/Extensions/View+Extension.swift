@@ -16,7 +16,7 @@ public extension View {
         modifier(JochexSectionBackgroundModifier())
     }
     
-    public func jochexUseGlassIfAvailable(_ using: Bool) -> some View {
+    func jochexUseGlassIfAvailable(_ using: Bool) -> some View {
         self
             .environment(\.glassIfAvailable, using)
     }
