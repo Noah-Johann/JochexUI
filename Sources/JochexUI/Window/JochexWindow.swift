@@ -90,7 +90,9 @@ public class JochexWindow: NSWindow {
     }
     
     @objc dynamic var _cornerRadius: CGFloat {
-        if #available(macOS 26, *) {
+        if #available(macOS 27, *) {
+            16
+        } else if #available(macOS 26, *) {
             24
         } else {
             12
