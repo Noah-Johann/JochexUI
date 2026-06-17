@@ -66,7 +66,7 @@ public struct JochexTabBar<Tabs>: View where Tabs: View {
         }
         .padding(4)
         .background {
-            if glass {
+            if #available(macOS 26, *), glass == true {
                 RoundedRectangle(cornerRadius: 24)
                    .glassEffect(in: RoundedRectangle(cornerRadius: 24))
             } else {
