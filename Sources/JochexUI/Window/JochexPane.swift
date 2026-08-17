@@ -59,6 +59,13 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
                     LazyVStack(spacing: 18) {
                         content()
                     }
+                    .padding(.top, {
+                        if #available(macOS 26, *) {
+                            titleBarHeight
+                        } else {
+                            0
+                        }
+                    }())
                     .padding(.horizontal, horizontalInset)
                     .padding(.vertical, verticalInset)
                 }
