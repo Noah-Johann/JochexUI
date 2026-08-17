@@ -52,7 +52,6 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
                         header()
                             .frame(height: titleBarHeight)
                         Divider()
-                        Spacer()
                     }
                 }
                 
@@ -60,7 +59,6 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
                     LazyVStack(spacing: 18) {
                         content()
                     }
-                    .padding(.top, titleBarHeight)
                     .padding(.horizontal, horizontalInset)
                     .padding(.vertical, verticalInset)
                 }
