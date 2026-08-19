@@ -82,7 +82,7 @@ public struct JochexPane<Header, Content>: View where Header: View, Content: Vie
                         )
                         .glassEffect(.clear, in: RoundedRectangle(cornerRadius: 24))
                     Spacer()
-                }
+                } .allowsHitTesting(false)
             }
         }
         .ignoresSafeArea()
