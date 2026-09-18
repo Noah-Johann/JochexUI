@@ -98,6 +98,7 @@ public class JochexWindow: NSWindow {
     }
     
     override public func makeKeyAndOrderFront(_ sender: Any?) {
+        center()
         super.makeKeyAndOrderFront(sender)
         if tabBarPanel == nil, let tabBarFactory {
             attachTabBar(tabBar: tabBarFactory)
@@ -105,6 +106,7 @@ public class JochexWindow: NSWindow {
     }
 
     override public func orderFrontRegardless() {
+        center()
         super.orderFrontRegardless()
         if tabBarPanel == nil, let tabBarFactory {
             attachTabBar(tabBar: tabBarFactory)
